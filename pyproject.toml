@@ -1,0 +1,50 @@
+[project]
+name = "python-backend-etl-pipeline"
+version = "1.0.0"
+description = "Idempotent invoice ETL service: clean architecture, Decimal VAT, FastAPI, PostgreSQL."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Alexandru Cojocari" }]
+keywords = ["etl", "fastapi", "postgresql", "vat", "clean-architecture"]
+dependencies = [
+    "fastapi>=0.115",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "sqlalchemy>=2.0.36",
+    "uvicorn>=0.32",
+    "psycopg[binary]>=3.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",
+    "ruff>=0.7",
+]
+pandas = [
+    "pandas>=2.2",
+]
+
+[project.scripts]
+etl-pipeline = "etl_pipeline.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src", "."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
